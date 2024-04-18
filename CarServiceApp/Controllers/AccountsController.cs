@@ -25,7 +25,7 @@ namespace CarServiceApp.Controllers
                 return BadRequest(response.Message);
             }
 
-            return Ok(new { Token = response.Token });
+            return Ok();
         }
 
         [HttpPost("login")]

@@ -55,25 +55,17 @@ namespace CarServiceApp.Services.Implementations
             return new GeneralResponse(true, "Service successfully updated.");
         }
 
-        public async Task<ServiceDTO> GetByIdAsync(uint id)
+        public async Task<Service> GetByIdAsync(uint id)
         {
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
-            {
-                return null;
-            }
+            // Включване на свързаната кола и събитията, ако има такива
+            var service = await _context.Services
+        .Include(s => s.Car) // This will include the Car entity in the result
+        .Include(s => s.ServiceEvents) // This will include the ServiceEvents collection in the result
+        .FirstOrDefaultAsync(s => s.Id == id);
 
-            var serviceDto = new ServiceDTO
-            {
- 
-                CarId = service.CarId,
-                DateReceived = service.DateReceived,
-                Description = service.Description,
-                Status = service.Status
-            };
-
-            return serviceDto;
+            return service;
         }
+
 
         public async Task<GeneralResponse> DeleteAsync(uint id)
         {
@@ -89,25 +81,12 @@ namespace CarServiceApp.Services.Implementations
             return new GeneralResponse(true, "Service successfully deleted.");
         }
 
-        public async Task<List<ServiceDTO>> GetAllAsync()
+        public async Task<List<Service>> GetAllAsync()
         {
             var services = await _context.Services.ToListAsync();
-            var serviceDtos = new List<ServiceDTO>();
+            
 
-            foreach (var service in services)
-            {
-                var serviceDto = new ServiceDTO
-                {
-                 
-                    CarId = service.CarId,
-                    DateReceived = service.DateReceived,
-                    Description = service.Description,
-                    Status = service.Status
-                };
-                serviceDtos.Add(serviceDto);
-            }
-
-            return serviceDtos;
+            return services;
         }
     }
 }
