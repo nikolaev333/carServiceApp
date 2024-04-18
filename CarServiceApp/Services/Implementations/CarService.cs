@@ -68,10 +68,10 @@ namespace CarServiceApp.Services.Implementations
             var car = await _context.Cars.FindAsync(id);
             if (car == null)
             {
-                return null;
+               
             }
 
-            return await _context.Cars.FindAsync(id);
+            return car;
         }
 
         public async Task<GeneralResponse> DeleteAsync(uint id)

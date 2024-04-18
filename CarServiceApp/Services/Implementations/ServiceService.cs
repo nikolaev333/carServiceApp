@@ -1,4 +1,5 @@
-﻿using BaseLibrary.Responses;
+﻿using AutoMapper;
+using BaseLibrary.Responses;
 using CarServiceApp.Data;
 using CarServiceApp.DTO;
 using CarServiceApp.Entities;
@@ -12,9 +13,12 @@ namespace CarServiceApp.Services.Implementations
     {
         private readonly AppDbContext _context;
 
-        public ServiceService(AppDbContext context)
+        private readonly IMapper _mapper;
+
+        public ServiceService(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<GeneralResponse> CreateAsync(ServiceDTO serviceDto)
@@ -24,13 +28,7 @@ namespace CarServiceApp.Services.Implementations
                 return new GeneralResponse(false, "Invalid service data provided.");
             }
 
-            var service = new Service
-            {
-                CarId = serviceDto.CarId,
-                DateReceived = serviceDto.DateReceived,
-                Description = serviceDto.Description,
-                Status = serviceDto.Status
-            };
+            var service = _mapper.Map<Service>(serviceDto);
 
             await _context.Services.AddAsync(service);
             await _context.SaveChangesAsync();

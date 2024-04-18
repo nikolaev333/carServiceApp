@@ -1,4 +1,5 @@
-﻿using BaseLibrary.Responses;
+﻿using AutoMapper;
+using BaseLibrary.Responses;
 using CarServiceApp.Data;
 using CarServiceApp.DTO;
 using CarServiceApp.Entities;
@@ -11,10 +12,12 @@ namespace CarServiceApp.Services.Implementations
     public class ServiceEventService : IServiceEventService
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ServiceEventService(AppDbContext context)
+        public ServiceEventService(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<GeneralResponse> CreateAsync(ServiceEventDTO serviceEventDto)
