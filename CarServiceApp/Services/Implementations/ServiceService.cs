@@ -21,7 +21,7 @@ namespace CarServiceApp.Services.Implementations
         {
             if (serviceDto == null)
             {
-                return new GeneralResponse(false, "Invalid service data provided.", null);
+                return new GeneralResponse(false, "Invalid service data provided.");
             }
 
             var service = new Service
@@ -35,7 +35,7 @@ namespace CarServiceApp.Services.Implementations
             await _context.Services.AddAsync(service);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service successfully created.", null);
+            return new GeneralResponse(true, "Service successfully created.");
         }
 
         public async Task<GeneralResponse> UpdateAsync(uint id, ServiceDTO serviceDto)
@@ -43,7 +43,7 @@ namespace CarServiceApp.Services.Implementations
             var service = await _context.Services.FindAsync(id);
             if (service == null)
             {
-                return new GeneralResponse(false, "Service not found.", null);
+                return new GeneralResponse(false, "Service not found.");
             }
 
             service.CarId = serviceDto.CarId;
@@ -54,7 +54,7 @@ namespace CarServiceApp.Services.Implementations
             _context.Services.Update(service);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service successfully updated.", null);
+            return new GeneralResponse(true, "Service successfully updated.");
         }
 
         public async Task<ServiceDTO> GetByIdAsync(uint id)
@@ -82,13 +82,13 @@ namespace CarServiceApp.Services.Implementations
             var service = await _context.Services.FindAsync(id);
             if (service == null)
             {
-                return new GeneralResponse(false, "Service not found.", null);
+                return new GeneralResponse(false, "Service not found.");
             }
 
             _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service successfully deleted.", null);
+            return new GeneralResponse(true, "Service successfully deleted.");
         }
 
         public async Task<List<ServiceDTO>> GetAllAsync()

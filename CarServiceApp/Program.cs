@@ -28,6 +28,7 @@ builder.Services.AddAuthorization(options =>
     // Add other policies here
 });
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICarService, CarService>();

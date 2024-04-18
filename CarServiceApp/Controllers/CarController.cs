@@ -1,13 +1,11 @@
 ﻿using CarServiceApp.DTO;
 using CarServiceApp.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace CarServiceApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("car")]
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;

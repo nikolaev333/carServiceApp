@@ -7,6 +7,6 @@ namespace CarServiceApp.Services.Contracts
     public interface IAuthService
     {
         Task<GeneralResponse> CreateAsync(RegisterDTO registerDto);
-        Task<LoginResponse> SignInAsync(LoginDTO loginDto);
+        Task<AuthResponse> SignInAsync(LoginDTO loginDto);
     }
 }

@@ -6,11 +6,9 @@ using CarServiceApp.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CarServiceApp.Services.Implementations
 {
@@ -29,7 +27,7 @@ namespace CarServiceApp.Services.Implementations
         {
             if (registerDto == null)
             {
-                return new GeneralResponse(false, "Invalid registration data provided.", null);
+                return new GeneralResponse(false, "Invalid registration data provided.");
             }
 
             var userExists = await _context.Users.AnyAsync(u =>
@@ -37,7 +35,7 @@ namespace CarServiceApp.Services.Implementations
 
             if (userExists)
             {
-                return new GeneralResponse(false, "Username or email already exists.", null);
+                return new GeneralResponse(false, "Username or email already exists.");
             }
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
@@ -63,20 +61,20 @@ namespace CarServiceApp.Services.Implementations
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "User successfully registered.", null);
+            return new GeneralResponse(true, "User successfully registered.");
         }
 
-        public async Task<LoginResponse> SignInAsync(LoginDTO loginDto)
+        public async Task<AuthResponse> SignInAsync(LoginDTO loginDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username);
 
             if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
             {
                 var token = GenerateJwtToken(user);
-                return new LoginResponse(true, "Login successful.", token);
+                return new AuthResponse(true, "Login successful.", token);
             }
 
-            return new LoginResponse(false, "Invalid username or password.", null);
+            return new AuthResponse(false, "Invalid username or password.", null);
         }
 
         private string GenerateJwtToken(User user)

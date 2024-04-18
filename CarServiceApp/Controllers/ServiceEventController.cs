@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarServiceApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("service-event")]
     public class ServiceEventController : ControllerBase
     {
         private readonly IServiceEventService _serviceEventService;

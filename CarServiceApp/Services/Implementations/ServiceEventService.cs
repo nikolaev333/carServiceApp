@@ -21,7 +21,7 @@ namespace CarServiceApp.Services.Implementations
         {
             if (serviceEventDto == null)
             {
-                return new GeneralResponse(false, "Invalid service event data provided.", null);
+                return new GeneralResponse(false, "Invalid service event data provided.");
             }
 
             var serviceEvent = new ServiceEvent
@@ -34,7 +34,7 @@ namespace CarServiceApp.Services.Implementations
             await _context.ServiceEvents.AddAsync(serviceEvent);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service event successfully created.", null);
+            return new GeneralResponse(true, "Service event successfully created.");
         }
 
         public async Task<GeneralResponse> UpdateAsync(uint id, ServiceEventDTO serviceEventDto)
@@ -42,7 +42,7 @@ namespace CarServiceApp.Services.Implementations
             var serviceEvent = await _context.ServiceEvents.FindAsync(id);
             if (serviceEvent == null)
             {
-                return new GeneralResponse(false, "Service event not found.", null);
+                return new GeneralResponse(false, "Service event not found.");
             }
 
             serviceEvent.ServiceId = serviceEventDto.ServiceId;
@@ -52,7 +52,7 @@ namespace CarServiceApp.Services.Implementations
             _context.ServiceEvents.Update(serviceEvent);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service event successfully updated.", null);
+            return new GeneralResponse(true, "Service event successfully updated.");
         }
 
         public async Task<ServiceEventDTO> GetByIdAsync(uint id)
@@ -79,13 +79,13 @@ namespace CarServiceApp.Services.Implementations
             var serviceEvent = await _context.ServiceEvents.FindAsync(id);
             if (serviceEvent == null)
             {
-                return new GeneralResponse(false, "Service event not found.", null);
+                return new GeneralResponse(false, "Service event not found.");
             }
 
             _context.ServiceEvents.Remove(serviceEvent);
             await _context.SaveChangesAsync();
 
-            return new GeneralResponse(true, "Service event successfully deleted.", null);
+            return new GeneralResponse(true, "Service event successfully deleted.");
         }
 
         public async Task<List<ServiceEventDTO>> GetAllAsync()

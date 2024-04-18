@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BaseLibrary.Responses
 {
-    public record GeneralResponse(bool Success, string Message, string Token);
+    public record GeneralResponse(bool Success, string Message);
 }
